@@ -19,6 +19,10 @@ class Install
     public static function install()
     {
         static::installByRelation();
+        $event_config_path = config_path() . '/event.php';
+        if (!is_file($event_config_path)) {
+            file_put_contents($event_config_path, "<?php\n\nreturn [\n    \n];\n");
+        }
     }
 
     /**
@@ -27,6 +31,10 @@ class Install
      */
     public static function uninstall()
     {
+        $event_config_path = config_path() . '/event.php';
+        if (is_file($event_config_path)) {
+            unlink($event_config_path);
+        }
         self::uninstallByRelation();
     }
 
