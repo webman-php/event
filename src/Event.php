@@ -32,7 +32,7 @@ class Event
      * @param $callback
      * @return int
      */
-    public static function subscribe($event_name, callable $callback): int
+    public static function on($event_name, callable $callback): int
     {
         $is_prefix_name = $event_name[strlen($event_name)-1] === '*';
         if ($is_prefix_name) {
@@ -48,7 +48,7 @@ class Event
      * @param $id
      * @return int
      */
-    public static function unsubscribe($event_name, int $id): int
+    public static function off($event_name, int $id): int
     {
         if (isset(static::$eventMap[$event_name][$id])) {
             unset(static::$eventMap[$event_name][$id]);
@@ -62,7 +62,7 @@ class Event
      * @param $data
      * @return int
      */
-    public static function publish($event_name, $data): int
+    public static function emit($event_name, $data): int
     {
         $success_count = 0;
         $callbacks = static::$eventMap[$event_name]??[];

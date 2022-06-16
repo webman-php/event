@@ -48,7 +48,7 @@ class BootStrap implements \Webman\Bootstrap
                     $callbacks = static::convertCallable($callbacks);
                     if (is_callable($callbacks)) {
                         $events[$event_name] = [$callbacks];
-                        Event::subscribe($event_name, $callbacks);
+                        Event::on($event_name, $callbacks);
                         continue;
                     }
                     if (!is_array($callbacks)) {
@@ -61,7 +61,7 @@ class BootStrap implements \Webman\Bootstrap
                         $callback = static::convertCallable($callback);
                         if (is_callable($callback)) {
                             $events[$event_name][] = $callback;
-                            Event::subscribe($event_name, $callback);
+                            Event::on($event_name, $callback);
                             continue;
                         }
                         $msg = "Events: $event_name => " . var_export($callback, true) . " is not callable\n";
