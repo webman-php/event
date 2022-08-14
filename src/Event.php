@@ -71,7 +71,8 @@ class Event
         foreach ($listeners as $listener) {
             try {
                 $response = $listener($data, $event_name);
-            } catch (\Throwable $response) {
+            } catch (\Throwable $e) {
+                $responses[] = $e;
                 if (!static::$logger && is_callable('\support\Log::error')) {
                     static::$logger = Log::channel();
                 }
