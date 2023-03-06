@@ -63,9 +63,8 @@ class Event
      * @param bool $halt
      * @return array|null|mixed
      */
-    public static function emit($event_name, $data, $halt = false)
+    public static function emit($event_name, $data, bool $halt = false)
     {
-        $success_count = 0;
         $listeners = static::getListeners($event_name);
         $responses = [];
         foreach ($listeners as $listener) {
