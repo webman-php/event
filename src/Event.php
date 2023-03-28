@@ -90,6 +90,29 @@ class Event
         }
         return $halt ? null : $responses;
     }
+    
+    /**
+     * @param mixed $event_name
+     * @param mixed $data
+     * @param bool $halt
+     * @return array|null|mixed
+     */
+    public static function dispatch($event_name, $data, bool $halt = false)
+    {
+        $listeners = static::getListeners($event_name);
+        $responses = [];
+        foreach ($listeners as $listener) {
+            $response = $listener($data, $event_name);
+            $responses[] = $response;
+            if ($halt && !is_null($response)) {
+                return $response;
+            }
+            if ($response === false) {
+                break;
+            }
+        }
+        return $halt ? null : $responses;
+    }
 
     /**
      * @return array
